@@ -81,6 +81,8 @@ sequenceDiagram
 
 Detalhes completos do protocolo e das regras de validação estão em [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
+Para onde o projeto vai: [`docs/VISION.md`](docs/VISION.md) (visão do motor de simulação) e [`docs/FEASIBILITY.md`](docs/FEASIBILITY.md) (viabilidade e fases).
+
 ## Estrutura do repositório
 
 ```text
@@ -148,6 +150,7 @@ Para reportar vulnerabilidades, veja [`SECURITY.md`](SECURITY.md).
 
 - [x] **v0.1.0** — Protótipo inicial com as quatro métricas.
 - [x] **v0.2.0** — Adaptação ao formato de painel do Kindroid, ponte de arquivos e diagnóstico.
+- [ ] **Motor de simulação de vida do Kin** — corpo, mente e relacionamento em tempo real. Veja a [visão](docs/VISION.md) e a [análise de viabilidade](docs/FEASIBILITY.md).
 - [ ] Testes automatizados de validação do esquema e da ponte (mock do host).
 - [ ] Migração de esquema (`schemaVersion` 2) com métricas configuráveis.
 - [ ] Histórico/gráfico de evolução das métricas.

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b1020">
+  <title>Status Bar — Kindroid</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b1020;--card:#151e32;--line:#2b3955;--text:#f0f5ff;--muted:#94a4bf;--soft:#8294b4;--blue:#8db9ff}
+    *{box-sizing:border-box}html,body{margin:0;min-height:100%}
+    body{background:radial-gradient(ellipse 640px 260px at 10% -6%,#253969 0%,transparent 76%),var(--bg);color:var(--text);font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid #a4c5ff;outline-offset:4px}
+    .shell{max-width:780px;margin:0 auto;padding:20px 18px 28px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 0 18px;border-bottom:1px solid var(--line)}
+    .brand{display:flex;gap:11px;align-items:center}.brand strong{display:block;font-size:16px;letter-spacing:.1px}.brand small{display:block;margin-top:3px;font-weight:750;font-size:9px;color:#8c9fbc;letter-spacing:1.4px}
+    .mark{display:flex;gap:3px;align-items:center;justify-content:center;width:37px;height:37px;background:#1e3151;border:1px solid #41608c;border-radius:11px}.mark i{display:block;background:#8db9ff;width:4px;border-radius:8px}.mark i:nth-child(1){height:11px}.mark i:nth-child(2){height:20px}.mark i:nth-child(3){height:15px}
+    .build{font-weight:800;color:#c2d9fe;background:#1b2c4a;border:1px solid #334a70;border-radius:50px;padding:5px 10px;font-size:10px;white-space:nowrap}
+    .intro{padding:22px 1px 19px}.eyebrow{color:#9cbcf1;letter-spacing:1.6px;font-weight:800;font-size:9px}.intro h1{margin:8px 0 5px;font-size:clamp(24px,5vw,33px);line-height:1.17;letter-spacing:-.7px}.intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+    .card{border-radius:18px;border:1px solid var(--line);background:linear-gradient(145deg,#18233a,#121b2f);box-shadow:0 12px 25px #0002}
+    .profile-card{padding:17px 18px 16px}.profile-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+    .profile{display:flex;gap:11px;align-items:center;min-width:0}.avatar{display:grid;place-items:center;flex:0 0 auto;width:43px;height:43px;border-radius:13px;background:linear-gradient(135deg,#4775aa,#484c8b);color:#eff5ff;font-weight:800;font-size:23px}
+    .overline{font-size:9px;letter-spacing:1.2px;font-weight:850;color:#8aa4c8;margin:0 0 3px}.profile-name{margin:0;font-weight:700;font-size:15px}.profile-desc{margin:2px 0 0;color:var(--muted);font-size:10px}
+    .pill{font-weight:650;font-size:10px;padding:7px 9px;border-radius:99px;color:#93e0bf;background:#173a35;border:1px solid #2d6d5b;white-space:nowrap}.pill:before{content:"";display:inline-block;background:#65d4a4;width:6px;height:6px;border-radius:50%;margin-right:6px;vertical-align:middle}
+    .metrics{padding-top:3px}.metric{padding:14px 0 12px}.metric+.metric{border-top:1px solid #27334a}.metric-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+    label{font-weight:650;font-size:13px;display:flex;align-items:center;gap:9px}.symbol{width:27px;height:27px;display:grid;place-items:center;border-radius:8px;font-size:15px}
+    .energy .symbol{background:#59462166;color:#eabe69}.mood .symbol{background:#23544466;color:#75e2ae}.social .symbol{background:#21436566;color:#93beff}.stress .symbol{background:#60304466;color:#ff9cba}
+    output{font-weight:800;font-size:14px;font-variant-numeric:tabular-nums}.metric p{font-size:10px;color:var(--soft);margin:9px 0 0}
+    input[type="range"]{--progress:50%;width:100%;display:block;appearance:none;background:linear-gradient(to right,var(--accent) var(--progress),#2a364b var(--progress));border-radius:99px;height:7px;cursor:pointer;margin:0}
+    input[type="range"]::-webkit-slider-thumb{appearance:none;background:#1b273b;border-radius:50%;border:3px solid #edf4ff;box-shadow:0 1px 6px #0007;width:18px;height:18px}
+    input[type="range"]::-moz-range-thumb{background:#1b273b;border-radius:50%;border:3px solid #edf4ff;width:12px;height:12px}
+    .energy{--accent:#deb468}.mood{--accent:#67d2a4}.social{--accent:#83b5f6}.stress{--accent:#ec8faa}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.actions button{min-height:41px;border-radius:10px;padding:8px 10px;font-size:11px;font-weight:800;border:1px solid #3b4d68}
+    .actions button.primary{background:#638fd6;color:#fff;border-color:#638fd6}.actions button.secondary{background:#1d2b45;color:#dbe8fd}
+    .actions button:active{transform:translateY(1px)}.actions button:disabled{opacity:.55;cursor:not-allowed}
+    .metadata{border-top:1px solid var(--line);padding-top:13px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-top:15px;font-size:10px;color:var(--muted)}.metadata strong{color:#d6e3fa}
+    .details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:13px}.small-card{padding:15px 16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.section-head h2{margin:0;font-size:13px}.tag{color:#b4cff7;background:#243a60;border-radius:5px;padding:3px 7px;font-size:9px;font-weight:700}
+    .diag{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #2b3950;font-size:11px}.diag span{color:var(--muted)}.diag strong{text-align:right;font-weight:650;color:#d0dcf1}.diag strong.good{color:#83deb3}.diag strong.warn{color:#f8bf83}
+    .log{list-style:none;margin:0;padding:0;max-height:218px;overflow:auto}.log li{padding:5px 0 6px 10px;margin:7px 0;border-left:2px solid #4f71a3;font-size:10px;color:#bbc9df;line-height:1.45}.log time{display:block;font-size:9px;color:#8494af;margin-top:4px}.text-button{font-size:10px;color:#9cbeff;background:transparent;border:0;padding:3px 4px}
+    .foot{text-align:center;font-size:9px;letter-spacing:1px;color:#6f82a2;margin:18px 0 0}.notice{font-size:11px;color:#90a9c9;text-align:center;margin:13px 0 0}
+    .toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#273e5d;color:#fff;padding:10px 14px;border:1px solid #6d8ab6;border-radius:11px;max-width:90vw;box-shadow:0 6px 18px #0008;font-size:12px;z-index:3}.toast[hidden]{display:none}
+    @media(max-width:570px){.shell{padding:14px 13px 22px}.profile-card{padding:15px 14px}.details{grid-template-columns:1fr}.intro{padding:17px 1px 15px}.pill{font-size:0;padding:8px;line-height:0}.pill:before{margin-right:0}.metadata{font-size:9px}.actions button{font-size:11px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><div class="mark" aria-hidden="true"><i></i><i></i><i></i></div><div><strong>Status Bar</strong><small>KINDROID WORKSHOP EXPERIMENT</small></div></div><span class="build">v0.2.0</span></header>
+    <section class="intro"><div class="eyebrow">SANDBOX / PANEL TEST</div><h1>Companion status</h1><p>Four fictional values. Adjust them, save them, and test the Kindroid file bridge. No actual Kin attributes are read or changed.</p></section>
+    <section class="card profile-card" aria-label="Demo companion status">
+      <div class="profile-head"><div class="profile"><div class="avatar" aria-hidden="true">S</div><div><div class="overline">DEMO PROFILE</div><h2 class="profile-name">Sample Companion</h2><p class="profile-desc">Manually controlled sample metrics</p></div></div><span class="pill">Demo active</span></div>
+      <div class="metrics">
+        <div class="metric energy"><div class="metric-top"><label for="energy"><span class="symbol" aria-hidden="true">⚡</span> Energy</label><output id="energy-value" for="energy">74%</output></div><input id="energy" aria-label="Energy" type="range" min="0" max="100" step="1" value="74"><p>Fictional stamina level</p></div>
+        <div class="metric mood"><div class="metric-top"><label for="mood"><span class="symbol" aria-hidden="true">◡</span> Mood</label><output id="mood-value" for="mood">86%</output></div><input id="mood" aria-label="Mood" type="range" min="0" max="100" step="1" value="86"><p>Fictional emotional balance</p></div>
+        <div class="metric social"><div class="metric-top"><label for="social"><span class="symbol" aria-hidden="true">◎</span> Social</label><output id="social-value" for="social">48%</output></div><input id="social" aria-label="Social" type="range" min="0" max="100" step="1" value="48"><p>Fictional social engagement</p></div>
+        <div class="metric stress"><div class="metric-top"><label for="stress"><span class="symbol" aria-hidden="true">⌁</span> Stress</label><output id="stress-value" for="stress">23%</output></div><input id="stress" aria-label="Stress" type="range" min="0" max="100" step="1" value="23"><p>Higher is more simulated stress</p></div>
+      </div>
+      <div class="actions"><button class="primary" type="button" id="tick">↻ Run demo tick</button><button class="secondary" type="button" id="reset">Reset sample</button><button class="secondary" type="button" id="export">Export JSON</button><button class="secondary" type="button" id="read">Reload saved state</button></div>
+      <div class="metadata"><span>Revision <strong id="revision">0</strong></span><span>Updated <strong id="updated">just now</strong></span></div>
+    </section>
+    <div class="details">
+      <section class="card small-card" aria-label="Storage diagnostics"><div class="section-head"><h2>Diagnostics</h2><span class="tag">TEST MODE</span></div><div class="diag"><span>Interface</span><strong class="good">Ready</strong></div><div class="diag"><span>Kindroid host</span><strong id="host-status">Waiting for bridge</strong></div><div class="diag"><span>Persistence</span><strong id="storage-status">Checking…</strong></div><div class="diag"><span>Kin data</span><strong>Not connected</strong></div></section>
+      <section class="card small-card" aria-label="Activity log"><div class="section-head"><h2>Activity log</h2><button class="text-button" id="clear" type="button">Clear</button></div><ol class="log" id="log" aria-live="polite"></ol></section>
+    </div>
+    <p class="notice">This is a test interface, not an automatic reading of your companion.</p>
+    <footer class="foot">STATUS BAR • EXPERIMENTAL • NO EXTERNAL REQUESTS</footer>
+  </main>
+  <div id="toast" class="toast" hidden role="status" aria-live="polite"></div>
+  <script>
+  (() => {
+    'use strict';
+    // Data model is identical to the previous Status Bar v0.1.0 experiment.
+    const PATH = 'status.json';
+    const LOCAL_KEY = 'kindroid.status-bar.demo.v2';
+    const METRICS = ['energy','mood','social','stress'];
+    const DEFAULTS = Object.freeze({energy:74,mood:86,social:48,stress:23});
+    const DELTA = Object.freeze({energy:-4,mood:2,social:-1,stress:3});
+    const $ = id => document.getElementById(id);
+    const now = () => new Date().toISOString();
+    const makeInitial = () => ({schemaVersion:1,revision:0,updatedAt:now(),values:{...DEFAULTS}});
+    const clamp = n => Math.max(0,Math.min(100,Math.round(n)));
+    let state=makeInitial(), localEnabled=false, hostSeen=false, isDirty=false;
+    let initialRequestPending=false, lastRequestAt=0, localSaveTimer=0, writeTimer=0, toastTimer=0;
+    let expectedParentOrigin='*';
+    try{ if (document.referrer) {const u=new URL(document.referrer);if(/^https?:$/.test(u.protocol))expectedParentOrigin=u.origin;} }catch(_){/* unknown parent origin */}
+
+    function valid(s){
+      return !!s && typeof s==='object' && !Array.isArray(s) && s.schemaVersion===1 &&
+        Number.isSafeInteger(s.revision) && s.revision>=0 &&
+        typeof s.updatedAt==='string' && Number.isFinite(Date.parse(s.updatedAt)) &&
+        !!s.values && typeof s.values==='object' && !Array.isArray(s.values) &&
+        Object.keys(s.values).length===4 && METRICS.every(k=>Number.isInteger(s.values[k])&&s.values[k]>=0&&s.values[k]<=100);
+    }
+    function copyState(s){return {schemaVersion:1,revision:s.revision,updatedAt:s.updatedAt,values:{...s.values}};}
+    function log(message){
+      const item=document.createElement('li'), tm=document.createElement('time');
+      item.textContent=message;tm.dateTime=now();tm.textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      item.appendChild(tm);$('log').prepend(item);while($('log').children.length>6)$('log').lastElementChild.remove();
+    }
+    function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{$('toast').hidden=true;},2400);}
+    function render(){
+      for(const m of METRICS){const input=$(m);input.value=String(state.values[m]);input.style.setProperty('--progress',`${state.values[m]}%`);$(`${m}-value`).textContent=`${state.values[m]}%`;}
+      $('revision').textContent=String(state.revision);
+      $('updated').textContent=new Date(state.updatedAt).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    }
+    function persistLocal(){if(!localEnabled)return;try{localStorage.setItem(LOCAL_KEY,JSON.stringify(state));}catch(_){localEnabled=false;updateStatus();}}
+    function postKin(message){
+      if(window.parent===window)return false;
+      try{window.parent.postMessage(message,expectedParentOrigin);return true;}catch(_){return false;}
+    }
+    function updateStatus(){
+      $('host-status').textContent=hostSeen?'Bridge responded':window.parent===window?'Standalone preview':'Awaiting response';
+      $('host-status').className=hostSeen?'good':'';
+      $('storage-status').textContent=hostSeen?'Kindroid files (+ local backup)':localEnabled?'Browser local storage':'Session only';
+    }
+    function scheduleHostWrite(){
+      if(window.parent===window)return;
+      clearTimeout(writeTimer);
+      writeTimer=setTimeout(()=>{postKin({kin:'files.write',path:PATH,body:JSON.stringify(state)});},140);
+    }
+    function commit(values,label){
+      state={schemaVersion:1,revision:state.revision+1,updatedAt:now(),values:{...values}};
+      isDirty=true;
+      persistLocal();render();log(label);scheduleHostWrite();
+    }
+    function readSaved(){
+      if(window.parent===window){log('Standalone mode: using browser storage.');toast('No parent bridge in standalone preview');return;}
+      initialRequestPending=true;lastRequestAt=Date.now();
+      if(!postKin({kin:'files.read',path:PATH})){initialRequestPending=false;log('Could not request Kindroid file.');}
+      else log('Requested status.json from Kindroid.');
+    }
+    function receive(event){
+      if(window.parent===window||event.source!==window.parent)return;
+      if(expectedParentOrigin!=='*' && event.origin!==expectedParentOrigin)return;
+      const d=event.data;
+      if(!d||typeof d!=='object'||!['files.read','files.write'].includes(d.kin))return;
+      if(d.path!==undefined&&d.path!==PATH)return;
+      hostSeen=true;updateStatus();
+      if(d.kin==='files.read'){
+        if(!initialRequestPending)return;
+        initialRequestPending=false;
+        if(d.ok===false){log('Kindroid read failed; kept current demo data.');return;}
+        let saved;
+        try{saved=typeof d.body==='string'?JSON.parse(d.body):d.body;}catch(_){log('Invalid Kindroid JSON ignored.');return;}
+        if(!valid(saved)){log('No valid saved state. Keeping demo values.');return;}
+        // Never replace user edits made while a read request was in flight.
+        if(isDirty){log('Saved state arrived after edits; current values preserved.');scheduleHostWrite();return;}
+        state=copyState(saved);persistLocal();render();log('Restored values from Kindroid files.');
+      }
+      if(d.kin==='files.write'){
+        if(d.ok===false){log('Kindroid write failed. Browser backup retained.');toast('Kindroid save failed');}
+        else log('Kindroid file write acknowledged.');
+      }
+    }
+    function exportJSON(){
+      const payload=JSON.stringify(state,null,2), blob=new Blob([payload],{type:'application/json'});
+      const url=URL.createObjectURL(blob), link=document.createElement('a');
+      link.href=url;link.download='status-bar-state.json';document.body.appendChild(link);link.click();link.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);log('Exported JSON snapshot.');toast('JSON export requested');
+    }
+    function init(){
+      try{localStorage.setItem('__status_bar_test__','1');localStorage.removeItem('__status_bar_test__');localEnabled=true;
+        const raw=localStorage.getItem(LOCAL_KEY);if(raw){const s=JSON.parse(raw);if(valid(s))state=copyState(s);}
+      }catch(_){localEnabled=false;}
+      render();updateStatus();log('Status Bar sandbox loaded.');
+      for(const m of METRICS){
+        const input=$(m);
+        input.addEventListener('input',()=>{input.style.setProperty('--progress',`${input.value}%`);$(`${m}-value`).textContent=`${input.value}%`;});
+        input.addEventListener('change',()=>commit({...state.values,[m]:clamp(Number(input.value))},`${m[0].toUpperCase()+m.slice(1)} set to ${input.value}%.`));
+      }
+      $('tick').addEventListener('click',()=>{const values={};for(const m of METRICS)values[m]=clamp(state.values[m]+DELTA[m]);commit(values,'Applied deterministic demo tick.');toast('Demo tick applied');});
+      $('reset').addEventListener('click',()=>{commit({...DEFAULTS},'Reset sample metrics.');toast('Sample values restored');});
+      $('export').addEventListener('click',exportJSON);
+      $('read').addEventListener('click',()=>{if(isDirty){toast('Reload the panel to read without overwriting edits');return;}readSaved();});
+      $('clear').addEventListener('click',()=>{$('log').replaceChildren();log('Activity log cleared.');});
+      window.addEventListener('message',receive);
+      if(window.parent!==window)readSaved();
+    }
+    init();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "kin": 1,
+  "name": "Status Bar",
+  "purpose": "Experiment with four fictional companion status metrics and save them between panel sessions.",
+  "screens": [
+    {
+      "slot": "panel",
+      "entry": "screen/index.html",
+      "title": "Status Bar"
+    }
+  ]
+}

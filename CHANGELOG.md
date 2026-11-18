@@ -7,6 +7,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e 
 ## [Não lançado]
 
 ### Adicionado
+- Licença MIT: o projeto passa a ser open source.
 - Código-fonte extraído para `src/` para facilitar leitura e revisão.
 - Documentação: README, arquitetura, guia de contribuição, política de segurança.
 - JSON Schema do estado persistido (`schemas/status.schema.json`).

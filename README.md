@@ -2,11 +2,14 @@
 
 # 📊 Status Bar — Painel experimental para Kindroid
 
-**Um painel leve, sem dependências, que exibe e persiste quatro métricas de status de um companheiro virtual.**
+**Um painel leve, open source e sem dependências, que exibe e persiste quatro métricas de status de um companheiro virtual.**
+
+Desenvolvido para o **Apps Workshop do Kindroid (alpha)**.
 
 ![version](https://img.shields.io/badge/vers%C3%A3o-0.2.0-8db9ff)
 ![status](https://img.shields.io/badge/status-experimental-f8bf83)
 ![deps](https://img.shields.io/badge/depend%C3%AAncias-0-65d4a4)
+![license](https://img.shields.io/badge/licen%C3%A7a-MIT-8db9ff)
 ![network](https://img.shields.io/badge/requisi%C3%A7%C3%B5es%20externas-nenhuma-65d4a4)
 
 </div>
@@ -29,7 +32,7 @@
 
 ## Visão geral
 
-O **Status Bar** é um *panel* (tela embutida) para o ecossistema de mini‑apps do Kindroid. Ele mostra um cartão de perfil de demonstração com quatro indicadores — **Energia**, **Humor**, **Social** e **Estresse** — que podem ser ajustados manualmente, simulados por um "tick" determinístico e salvos entre sessões.
+O **Status Bar** é um *panel* (tela embutida) open source criado para o **Apps Workshop do Kindroid**, o ambiente de mini‑apps atualmente em fase alpha. Ele mostra um cartão de perfil de demonstração com quatro indicadores — **Energia**, **Humor**, **Social** e **Estresse** — que podem ser ajustados manualmente, simulados por um "tick" determinístico e salvos entre sessões.
 
 > [!IMPORTANT]
 > Os valores são **fictícios e controlados manualmente**. O painel **não lê nem altera** atributos reais de nenhum Kin. É um ambiente de testes (sandbox).
@@ -157,4 +160,6 @@ Contribuições são bem-vindas! Leia o [guia de contribuição](CONTRIBUTING.md
 
 ## Licença
 
-Licença ainda não definida. Até que um arquivo `LICENSE` seja adicionado, todos os direitos são reservados ao autor.
+Distribuído sob a licença [MIT](LICENSE). Você pode usar, modificar e redistribuir livremente, mantendo o aviso de copyright.
+
+> Este é um projeto independente da comunidade e não é afiliado oficialmente ao Kindroid. "Kindroid" é marca de seus respectivos proprietários.

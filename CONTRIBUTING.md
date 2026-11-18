@@ -2,6 +2,8 @@
 
 Obrigado pelo interesse em contribuir com o **Status Bar**!
 
+Ao contribuir, você concorda que sua contribuição será licenciada sob a [licença MIT](LICENSE) do projeto.
+
 ## Fluxo de trabalho
 
 1. Crie uma branch a partir da `main` com um prefixo descritivo:
